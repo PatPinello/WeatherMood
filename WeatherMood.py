@@ -2,14 +2,27 @@ import requests
 import sqlite3
 
 response = requests.get("http://api.weatherapi.com/v1/current.json?key=ce694d555ff84cbbb3e122529220509&q=Rochester")
-#print(response.status_code)
-
-#print(response.json())
-
-
-#Database
+#print(response.status_code) #Check response
 con = sqlite3.connect("user.db")
 cursor = con.cursor()
+
+def UpdateLoc(user, name):
+    user.loc = name
+    return print(user.loc)
+
+def InsertDB(user):
+    cursor.execute("INSERT INTO user VALUES (?, ?, ?)", (user.name, user.loc, user.id))
+    return print("User inserted")
+
+def PrintDB(database):
+    result = cursor.execute("SELECT * FROM " + database)
+    return print(result.fetchall())
+
+class User:
+    def __init__(self, name, loc, id):
+        self.name = name
+        self.loc = loc
+        self.id = id
 
 try:
     cursor.execute("CREATE TABLE user(name, location, id)")
@@ -17,10 +30,8 @@ try:
 except:
     print("Existing table used")
 
-
-
 #Open transaction
-cursor.execute("SELECT EXISTS(SELECT 1 FROM user WHERE id=1)")
+cursor.execute("SELECT 1 FROM user WHERE id=0")
 if cursor.fetchone():
     print("User already exists")
 else:
@@ -33,30 +44,15 @@ else:
     #Close transaction
     con.commit()
 
-result = cursor.execute("SELECT * FROM user")
-
-print(result.fetchall())
-
-
-
 dict = response.json()
 loc = dict["location"]
 name = loc["name"]
-
-def UpdateLoc(user, name):
-    user.loc = name
-    return print(user.loc)
-
-
-class User:
-    def __init__(self, name, loc, id):
-        self.name = name
-        self.loc = loc
-        self.id = id
 
 Pat = User("Pat", "Mahopac", 0)
 Austin = User("Austin", "Rochester", 1)
 Katrina = User("Katrina", "Medellin", 2)
 
+InsertDB(Katrina)
+PrintDB("user")
 
 #UpdateLoc(Pat, name)
