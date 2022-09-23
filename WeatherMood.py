@@ -3,7 +3,7 @@ import sqlite3
 import googlemaps
 
 #Establishing Connection to Database
-con = sqlite3.connect("C:\\Users\patri\\Desktop\\WeatherMood\\WeatherMood\\user.db")
+con = sqlite3.connect("C:\\Users\\patri\\Desktop\\WeatherMood\\WeatherMood\\user.db")
 cur = con.cursor()
 
 #Updates location of user to current location
@@ -31,7 +31,7 @@ def UpdateWeather(user):
     return print(user.name + "'s weather and temmperature has been changed to '" + user.weather + "'")
 
 #Get users current location
-def GetCurrentLoc():
+#def GetCurrentLoc():
     
     gmaps = googlemaps.Client(key='AIzaSyBF-KtkTNuBPSPLKRaar5Y_Wg55UO8tUG0')
     latLng = gmaps.geolocate()
@@ -94,11 +94,13 @@ def main():
     AddUser(Ben)
     AddUser(Austin)
     AddUser(Pat)
-
-    UpdateLoc(Ben, 'Bangkok')
-    UpdateLoc(Pat, GetCurrentLoc())
+    
+    UpdateLoc(Ben, 'Manila')
+    #UpdateLoc(Pat, GetCurrentLoc())
     UpdateWeather(Pat)
-
+    UpdateWeather(Katrina)
+    UpdateWeather(Ben)
+    UpdateWeather(Austin)
     #DeleteUser(Ben)
     PrintDB("user")
 
