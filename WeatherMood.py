@@ -33,13 +33,13 @@ def UpdateWeather(user):
 #Get users current location
 #def GetCurrentLoc():
     
-    gmaps = googlemaps.Client(key='AIzaSyBF-KtkTNuBPSPLKRaar5Y_Wg55UO8tUG0')
+    gmaps = googlemaps.Client(key='GoogleAPIKey Temporarily redacted')
     latLng = gmaps.geolocate()
     coord = latLng["location"]
     lat = coord["lat"]
     lng = coord["lng"]
 
-    googleResponse = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s, %s&key=AIzaSyBF-KtkTNuBPSPLKRaar5Y_Wg55UO8tUG0" % (lat, lng))
+    googleResponse = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s, %s&key=GoogleAPIKey Temporarily redacted" % (lat, lng))
     #print(googleResponse.status_code) #Check if api responds
     googleDict = googleResponse.json()
     #Gets users city
